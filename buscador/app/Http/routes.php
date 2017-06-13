@@ -16,4 +16,4 @@ Route::get('/', function () {
 });
 
 
-Route::post('/buscador', "BuscadorController@store");
+Route::post('/buscador', "BusquedaController@store");

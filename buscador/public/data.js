@@ -1,13 +1,11 @@
 $(document).ready(function(){
-	
-
 	$("#txtBuscador").on('focus', function() {
 		$("#dangerException").hide();
 	});
 
 
 	$("#lnkHistorial").on('click', function(){
-		
+		$("#cm").empty();
 		$.ajax({
         	url: "http://cms.course:8089/historial"
     	}).then(function(data) {
@@ -30,6 +28,5 @@ function createTableInformacion(busqueda, i){
 	str += "</td></tr>"; 
 	
 	$("#cm").append(str);
-	console.log(str);
 	str = "";
 }

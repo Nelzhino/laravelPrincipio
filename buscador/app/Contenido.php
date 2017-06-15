@@ -18,19 +18,19 @@ class Contenido extends Model
 
     public function saveContenido($busqueda_id, $urls)
     {
+               
         
-        DB::beginTransaction();
-        
-        $this->busqueda_id = $busqueda_id;
         
         for($i=0; $i<count($urls); $i++)
         {
+            $this->busqueda_id = $busqueda_id;
             $this->url = $urls[$i];
-        	if(!$this->save()){
-        		DB::rollback();
-        	}else{
-        		DB::commit();
+            $flag = $this->save();
+        	if(!$flag){
+        		return false;
         	}
         }
+        return true;
+
     }
 }

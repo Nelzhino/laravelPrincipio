@@ -7,7 +7,7 @@
 
         <div class="form-group">
             <label for="txtBuscador">Digite lo que desea buscar:</label>
-            <input type="text" class="form-control" id="txtBuscador" name="txtBuscador" placeholder="Escribir...">
+            <input type="text" class="form-control" id="txtBuscador" name="txtBuscador" placeholder="Escribir..." autocomplete="off">
         </div>
 
         <button type="submit" class="btn btn-default">Buscar</button>
@@ -21,7 +21,6 @@
 		</div>
 	@endif
 	<br><hr>    
-
 	<ul class="nav nav-tabs">
 		<li class="active">
 			<a data-toggle="tab" href="#home">Resultado Busqueda</a>
@@ -50,7 +49,7 @@
 				  				@if(! empty($dataUrl['urlBusqueda']))
 				  					@for ($i=0; $i < count($dataUrl['urlBusqueda']); $i++)
 						    			<tr>
-							      			<td>{{ $dataUrl['urlBusqueda'][$i] }}</td>
+							      			<td><a href='{{ $dataUrl['urlBusqueda'][$i] }}'>{{ $dataUrl['urlBusqueda'][$i] }}</a></td>
 							    		</tr>
 				    				@endfor
 				  				@endif				

@@ -18,20 +18,7 @@ class BusquedaController extends Controller
 
 
     public function index(){
-
         return Busqueda::with('contenidos')->get();
-        /*foreach ( as $busqueda)
-        {
-
-            foreach ($busqueda->contenidos as $contenido) {
-                var_dump($contenido->url);
-            }
-        }*/
-        
-        /*$instaladores = $busquedas->contenidos;
-        foreach($instaladores as $contenido){
-            var_dump($contenido);
-        }*/
     }
 
     public function store(Request $request)
@@ -44,7 +31,7 @@ class BusquedaController extends Controller
             $dataUrl = $this->consumeService($busca);
 
             if($dataUrl != null){
-                /*DB::beginTransaction();
+                DB::beginTransaction();
 
                 $busqueda = new Busqueda;
                 $busqueda->palabras = $busca;
@@ -52,22 +39,30 @@ class BusquedaController extends Controller
                 if($busqueda->save())
                 {
                     if(count($dataUrl['urlBusqueda']) != 0){
-                        $contenido = new Contenido;
-                        if($contenido->saveContenido($busqueda->id, $dataUrl['urlBusqueda']))
+                        for($i=0; $i<count($dataUrl['urlBusqueda']); $i++)
                         {
-                            DB::commit();         
+                            $contenido = new Contenido;
+                            $contenido->busqueda_id = $busqueda->id;
+                            $contenido->url = $dataUrl['urlBusqueda'][$i];
+                            if($contenido->save())
+                            {
+                                DB::commit();         
+                            }else
+                            {
+                                DB::rollback();
+                            }
                         }
                     }
                     
                 }else{
                     DB::rollback();
-                } */
+                }
             }else{
                 $error = [
                     'err' => -1,
                     'descripcion' => 'Error'
                 ];
-                return view('buscador', compact('error'));
+                return view('buscador', compact('error')); // TODO Validar en caso del error debera devolverse a /
             }
                
         }

@@ -17,3 +17,4 @@ Route::get('/', function () {
 
 
 Route::post('/buscador', "BusquedaController@store");
+Route::get('/historial', "BusquedaController@index");

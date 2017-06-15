@@ -15,10 +15,10 @@ class CreateContenidosTable extends Migration
         Schema::create('contenidos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->longText('url');
-            $table->bigInteger('busquedas_id')->unsigned();
+            $table->bigInteger('busqueda_id')->unsigned();
             $table->timestamps();
             
-            $table->foreign('busquedas_id')->references('id')->on('busquedas');
+            $table->foreign('busqueda_id')->references('id')->on('busquedas');
 
         });
     }

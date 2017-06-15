@@ -13,31 +13,68 @@
         <button type="submit" class="btn btn-default">Buscar</button>
 	</form>
 
-	
+	<br>
+	@if(! empty($error))
+		<div class="alert alert-danger alert-dismissable" id="dangerException">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  			<strong>Danger!</strong>  Hay problemas con la conexion del Web Service.
+		</div>
+	@endif
 	<br><hr>    
 
+	<ul class="nav nav-tabs">
+		<li class="active">
+			<a data-toggle="tab" href="#home">Resultado Busqueda</a>
+		</li>
+		<li>
+			<a data-toggle="tab" href="#historial" id="lnkHistorial">Historial Busqueda</a>
+		</li>
+	</ul>
+	
+	<div class="tab-content">
+		<div id="home" class="tab-pane fade in active">
+			<!-- Valido inicialmente si hay datos -->
+			<h3>Resultados</h3> 
+			@if( ! empty($dataUrl))
+		    	<table class="table table-striped">
+				  	<thead>
+				    	<tr>
+				      		<th>Busqueda</th>
+				      		<th>Contenidos</th>
+				    	</tr>
+				  	</thead>
+				  	<tbody>
+				  		<tr>
+				  			<td rowspan="4">{{$dataUrl['contenido']}}</td>
+				  			<td>
+				  				@if(! empty($dataUrl['urlBusqueda']))
+				  					@for ($i=0; $i < count($dataUrl['urlBusqueda']); $i++)
+						    			<tr>
+							      			<td>{{ $dataUrl['urlBusqueda'][$i] }}</td>
+							    		</tr>
+				    				@endfor
+				  				@endif				
+				  			</td>
+			    		</tr>
+				  	</tbody>
+				</table>		
+			@endif
 
-	@if( ! empty($dataUrl))
-    	<table class="table table-striped">
-		  	<thead>
-		    	<tr>
-		      		<th>Busqueda</th>
-		      		<th>Contenidos</th>
-		    	</tr>
-		  	</thead>
-		  	<tbody>
-		  		<tr>
-		  			<td rowspan="4">{{$dataUrl['contenido']}}</td>
-		  			<td>
-		  				@for ($i=0; $i < count($dataUrl['urlBusqueda']); $i++)
-			    			<tr>
-				      			<td>{{ $dataUrl['urlBusqueda'][$i] }}</td>
-				    		</tr>
-		    			@endfor
-		  			</td>
-	    		</tr>
-		  	</tbody>
-		</table>		
-	@endif
-
+		</div>
+		
+		<div id="historial" class="tab-pane fade">
+			<h4>Aqui se encuentra todo el historial de busqueda</h4> 
+			<table class="table table-striped">
+				  	<thead>
+				    	<tr>
+				      		<th>Busqueda</th>
+				      		<th>Contenidos</th>
+				    	</tr>
+				  	</thead>
+				  	<tbody id="cm"></tbody>
+			</table>
+		</div>
+		
+		
+	</div>
 @endsection

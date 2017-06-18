@@ -11,10 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('buscador');
+Route::get('/', 'BusquedaController@getParameters');
+
+Route::group(['middleware' => 'cors'], function(){
+	Route::post('/busca', 'BusquedaController@store');
+	Route::get('/historial', 'BusquedaController@index');
 });
-
-
-Route::post('/buscador', "BusquedaController@store");
-Route::get('/historial', "BusquedaController@index");

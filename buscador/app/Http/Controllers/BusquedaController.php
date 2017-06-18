@@ -9,6 +9,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Contenido;
 use App\Busqueda;
+use App\Parametro;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
@@ -17,19 +18,29 @@ class BusquedaController extends Controller
 {
 
 
-    public function index(){
-        return Busqueda::with('contenidos')->get();
+    // Contiene informacion correspondiente a los parametros del sistema.
+    public function getParameters()
+    {
+        return view('buscador');
     }
 
+
+    // Devuelve lo que se ha buscado 
+    public function index()
+    {
+        return Busqueda::with('contenidos')->orderBy('created_at', 'DESC')->get();
+    }
+
+
+    // Metodo para guardar historial...
     public function store(Request $request)
     {
-        
         $busca = trim($request->txtBuscador);
         $dataUrl = null;
         if($busca != "")
         {
             $dataUrl = $this->consumeService($busca);
-
+        
             if($dataUrl != null){
                 DB::beginTransaction();
 
@@ -62,12 +73,11 @@ class BusquedaController extends Controller
                     'err' => -1,
                     'descripcion' => 'Error'
                 ];
-                return view('buscador', compact('error')); // TODO Validar en caso del error debera devolverse a /
-            }
-               
-        }
 
-        return view('buscador', compact('dataUrl'));       
+                return compact('error');
+            }      
+        }
+        return compact('dataUrl');
             
     }
 
